@@ -8,23 +8,38 @@
 
 const path = require('path')
 const { kebabCase } = require('lodash')
+import * as React from 'react'
+import { MarkdownRemarkEdge, Query } from '../src/graphql-types'
+import { CreatePagesArgs, CreateNodeArgs } from 'gatsby'
 
-function groupCountBy(field, edges) {
+function groupCountBy(field: 'tags', edges: MarkdownRemarkEdge[]) {
   const groupCounts = edges.reduce((acc, { node }) => {
     const groups = node.frontmatter[field] || []
-    groups.forEach(group => {
+    groups.forEach((group) => {
       acc[group] = (acc[group] || 0) + 1
     })
     return acc
-  }, {})
+  }, {} as { [key: string]: number })
 
   return Object.entries(groupCounts)
 }
 
-exports.createPages = async ({ actions, graphql, reporter }) => {
+exports.createPages = async ({ actions, graphql, reporter }: CreatePagesArgs) => {
   const { createPage } = actions
 
-  function createContentListPages({ itemTotal, prefix, component, context, limit = 10 }) {
+  function createContentListPages({
+    itemTotal,
+    prefix,
+    component,
+    context,
+    limit = 10,
+  }: {
+    itemTotal: number
+    prefix: string
+    component: string
+    context?: { tag: string }
+    limit?: number
+  }) {
     const pageTotal = Math.ceil(itemTotal / limit)
 
     for (let page = 1; page <= pageTotal; page++) {
@@ -41,17 +56,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           page,
           pageTotal,
           prefix,
-          skip
-        }
+          skip,
+        },
       })
     }
   }
 
   const IndexTemplate = path.resolve('src/templates/IndexTemplate.tsx')
   const TagTemplate = path.resolve('src/templates/TagTemplate.tsx')
-  const SingleTemplate = path.resolve('src/templates/SingleTemplate.tsx')
+  const SingleTemplate: string = path.resolve('src/templates/SingleTemplate.tsx')
 
-  const { data, errors } = await graphql(`
+  const { data, errors }: { data?: Query; errors?: Error } = await graphql(`
     {
       allMdx(filter: { frontmatter: { draft: { ne: true } } }) {
         edges {
@@ -77,14 +92,15 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     return
   }
 
-  const edges = data.allMdx.edges
+  const edges: MarkdownRemarkEdge[] = data.allMdx.edges
 
   edges.forEach(({ node }) => {
     const { frontmatter, parent } = node
     const path = frontmatter.path || `/${parent.sourceInstanceName}/${parent.name}`
     createPage({
       path,
-      component: SingleTemplate
+      component: SingleTemplate,
+      context: { slug: 'slug' },
     })
   })
 
@@ -93,7 +109,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   createContentListPages({
     itemTotal: edges.length,
     prefix: '/all',
-    component: IndexTemplate
+    component: IndexTemplate,
   })
 
   reporter.info(`Index (${Math.ceil(edges.length / 10)})`)
@@ -103,7 +119,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       itemTotal,
       prefix: `/tags/${kebabCase(tag)}`,
       component: TagTemplate,
-      context: { tag }
+      context: { tag },
     })
 
     reporter.info(`Tag: ${tag} (${Math.ceil(itemTotal / 10)})`)

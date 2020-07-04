@@ -1,4 +1,6 @@
+"use strict";
 /* eslint-disable @typescript-eslint/no-var-requires */
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -9,7 +11,7 @@ const { kebabCase } = require('lodash');
 function groupCountBy(field, edges) {
     const groupCounts = edges.reduce((acc, { node }) => {
         const groups = node.frontmatter[field] || [];
-        groups.forEach(group => {
+        groups.forEach((group) => {
             acc[group] = (acc[group] || 0) + 1;
         });
         return acc;
@@ -18,7 +20,7 @@ function groupCountBy(field, edges) {
 }
 exports.createPages = async ({ actions, graphql, reporter }) => {
     const { createPage } = actions;
-    function createContentListPages({ itemTotal, prefix, component, context, limit = 10 }) {
+    function createContentListPages({ itemTotal, prefix, component, context, limit = 10, }) {
         const pageTotal = Math.ceil(itemTotal / limit);
         for (let page = 1; page <= pageTotal; page++) {
             const path = page > 1 ? `${prefix}/${page}` : `${prefix}`;
@@ -33,8 +35,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
                     page,
                     pageTotal,
                     prefix,
-                    skip
-                }
+                    skip,
+                },
             });
         }
     }
@@ -71,14 +73,15 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         const path = frontmatter.path || `/${parent.sourceInstanceName}/${parent.name}`;
         createPage({
             path,
-            component: SingleTemplate
+            component: SingleTemplate,
+            context: { slug: 'slug' },
         });
     });
     reporter.info(`Articles (${edges.length})`);
     createContentListPages({
         itemTotal: edges.length,
         prefix: '/all',
-        component: IndexTemplate
+        component: IndexTemplate,
     });
     reporter.info(`Index (${Math.ceil(edges.length / 10)})`);
     groupCountBy('tags', edges).forEach(([tag, itemTotal]) => {
@@ -86,7 +89,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             itemTotal,
             prefix: `/tags/${kebabCase(tag)}`,
             component: TagTemplate,
-            context: { tag }
+            context: { tag },
         });
         reporter.info(`Tag: ${tag} (${Math.ceil(itemTotal / 10)})`);
     });
