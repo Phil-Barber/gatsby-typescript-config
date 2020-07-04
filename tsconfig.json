@@ -19,5 +19,5 @@
     "strictNullChecks": true,
     "target": "esnext"
   },
-  "include": ["./src/**/*", "./test/**/*"]
+  "include": ["./src/**/*", "./test/**/*", ".gatsby/*"]
 }
