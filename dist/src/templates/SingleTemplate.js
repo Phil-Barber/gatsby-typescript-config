@@ -1,11 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.query = void 0;
-const tslib_1 = require("tslib");
-const react_1 = tslib_1.__importDefault(require("react"));
+const react_1 = __importDefault(require("react"));
 const gatsby_1 = require("gatsby");
-const react_helmet_1 = tslib_1.__importDefault(require("react-helmet"));
+const react_helmet_1 = __importDefault(require("react-helmet"));
 const Layout_1 = require("../components/Layout");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const MDXRenderer = require('gatsby-plugin-mdx/mdx-renderer');
 const ContentTemplate = ({ data }) => {
     const { mdx: { frontmatter, body }, } = data;

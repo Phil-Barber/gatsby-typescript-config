@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/**
+ * Implement Gatsby's Node APIs in this file.
+ *
+ * See: https://www.gatsbyjs.org/docs/node-apis/
+ */
 const path = require('path');
 const { kebabCase } = require('lodash');
 function groupCountBy(field, edges) {

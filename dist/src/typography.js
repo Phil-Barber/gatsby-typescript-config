@@ -1,8 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const typography_1 = tslib_1.__importDefault(require("typography"));
-const gray_percentage_1 = tslib_1.__importDefault(require("gray-percentage"));
+const typography_1 = __importDefault(require("typography"));
+const gray_percentage_1 = __importDefault(require("gray-percentage"));
 const typography_breakpoint_constants_1 = require("typography-breakpoint-constants");
 const typography = new typography_1.default({
     baseFontSize: '20px',

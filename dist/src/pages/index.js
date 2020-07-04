@@ -1,8 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IndexPage = void 0;
-const tslib_1 = require("tslib");
-const react_1 = tslib_1.__importDefault(require("react"));
+const react_1 = __importDefault(require("react"));
 const gatsby_1 = require("gatsby");
 const Layout_1 = require("../components/Layout");
 exports.IndexPage = () => (react_1.default.createElement(react_1.default.Fragment, null,

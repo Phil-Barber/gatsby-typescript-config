@@ -1,9 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pager = void 0;
-const tslib_1 = require("tslib");
-const react_1 = tslib_1.__importDefault(require("react"));
-const styled_1 = tslib_1.__importDefault(require("@emotion/styled"));
+const react_1 = __importDefault(require("react"));
+const styled_1 = __importDefault(require("@emotion/styled"));
 const gatsby_1 = require("gatsby");
 function pageUrl(prefix, page) {
     return page <= 1 ? `/${prefix}` : `/${prefix}/${page}`;

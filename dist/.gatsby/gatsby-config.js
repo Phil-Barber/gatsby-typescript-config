@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 const gatsbyRemarkPlugins = [
     'gatsby-plugin-typegen',
     {
@@ -110,6 +111,9 @@ module.exports = {
         {
             resolve: 'gatsby-plugin-feed',
             options: {
+                /**
+                 * no need to specify the other options, since they will be merged with this
+                 */
                 feeds: [
                     {
                         title: 'Feed',
@@ -161,6 +165,10 @@ module.exports = {
                 display: 'minimal-ui',
                 icons: [
                     {
+                        // Everything in /static will be copied to an equivalent
+                        // directory in /public during development and build, so
+                        // assuming your favicons are in /static/favicon,
+                        // you can reference them here
                         src: '/favicon/192.png',
                         sizes: '192x192',
                         type: 'image/png'
